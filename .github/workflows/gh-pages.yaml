@@ -16,8 +16,9 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
+          path: cleanlab
           fetch-depth: 0
 
       - name: Install Pandoc
@@ -133,6 +134,19 @@ jobs:
           mkdir cleanlab-docs/stable
           cp -R cleanlab-docs/$GITHUB_REF_NAME/* cleanlab-docs/stable
           cp docs/source/_templates/redirect-to-stable.html cleanlab-docs/index.html
+
+      - name: Delete "stable" directory in cleanlab-docs repo
+        if: ${{ github.ref_type == 'tag' }}
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository_owner }}/cleanlab-docs
+          path: cleanlab-docs
+
+      - run: |
+          git rm -r stable
+          git commit . -m "Delete stable directory"
+          git push origin master
+          cd ../cleanlab
 
       - name: Deploy
         if: ${{ (github.ref == 'refs/heads/master') || (github.ref_type == 'tag') }}
