@@ -145,9 +145,7 @@ jobs:
       - name: Delete "stable" directory in cleanlab-docs repo
         if: ${{ github.ref_type == 'tag' }}
         run: |
-          ls
           cd cleanlab-docs-repo
-          ls
           git rm -r stable
           git commit . -m "Delete stable directory"
 
@@ -155,6 +153,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          repository: ${{ github.repository_owner }}/cleanlab-docs
 
       - name: Deploy
         # if: ${{ (github.ref == 'refs/heads/master') || (github.ref_type == 'tag') }}
