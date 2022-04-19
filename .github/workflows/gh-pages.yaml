@@ -150,8 +150,11 @@ jobs:
           ls
           git rm -r stable
           git commit . -m "Delete stable directory"
-          git push origin master
-          cd ..
+
+      - name: Push to cleanlab-docs repo
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
 
       - name: Deploy
         # if: ${{ (github.ref == 'refs/heads/master') || (github.ref_type == 'tag') }}
