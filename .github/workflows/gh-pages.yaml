@@ -152,7 +152,7 @@ jobs:
       - name: Push to cleanlab-docs repo
         uses: ad-m/github-push-action@master
         with:
-          # github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository_owner }}/cleanlab-docs
 
       - name: Deploy
