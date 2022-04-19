@@ -139,6 +139,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ github.repository_owner }}/cleanlab-docs
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           path: cleanlab-docs-repo
 
       - name: Delete "stable" directory in cleanlab-docs repo, then push it back to GH
