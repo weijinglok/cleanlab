@@ -142,7 +142,7 @@ jobs:
           token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           path: cleanlab-docs-repo
 
-      - name: Delete "stable" directory in cleanlab-docs repo, then push it back to GH
+      - name: Delete "stable" directory in cleanlab-docs repo
         if: ${{ github.ref_type == 'tag' }}
         run: |
           ls
