@@ -134,7 +134,7 @@ jobs:
           cp -R cleanlab-docs/$GITHUB_REF_NAME/* cleanlab-docs/stable
           cp docs/source/_templates/redirect-to-stable.html cleanlab-docs/index.html
 
-      - name: Delete "stable" directory in cleanlab-docs repo
+      - name: Checkout cleanlab-docs repo
         if: ${{ github.ref_type == 'tag' }}
         uses: actions/checkout@v3
         with:
@@ -145,10 +145,12 @@ jobs:
         if: ${{ github.ref_type == 'tag' }}
         run: |
           ls
+          cd cleanlab-docs-repo
+          ls
           git rm -r stable
           git commit . -m "Delete stable directory"
           git push origin master
-          cd ../cleanlab
+          cd ..
 
       - name: Deploy
         # if: ${{ (github.ref == 'refs/heads/master') || (github.ref_type == 'tag') }}
