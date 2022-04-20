@@ -103,6 +103,7 @@ jobs:
       - name: Create latest_release.txt file
         if: ${{ steps.stable_release.outcome == 'success' }}
         run: |
+          ls
           ls /cleanlab-docs
           echo ${{ steps.stable_release.outputs.release }} > cleanlab-docs/latest_release.txt
           ls /cleanlab-docs
