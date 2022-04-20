@@ -127,35 +127,11 @@ jobs:
           replace: ${{ env.DOCS_SITE_URL }}stable/index.html
           include: "docs/source/_templates/redirect-to-stable.html"
 
-      - name: Copy redirecting HTML file to cleanlab-docs/ and cleanlab-docs/stable
+      - name: Copy redirecting HTML file to cleanlab-docs/
         if: ${{ github.ref_type == 'tag' }}
         run: |
           mkdir cleanlab-docs/stable
-          cp -R cleanlab-docs/$GITHUB_REF_NAME/* cleanlab-docs/stable
           cp docs/source/_templates/redirect-to-stable.html cleanlab-docs/index.html
-
-      - name: Checkout cleanlab-docs repo
-        if: ${{ github.ref_type == 'tag' }}
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository_owner }}/cleanlab-docs
-          persist-credentials: false
-          fetch-depth: 0
-          # token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          path: cleanlab-docs-repo
-
-      - name: Delete "stable" directory in cleanlab-docs repo
-        if: ${{ github.ref_type == 'tag' }}
-        run: |
-          cd cleanlab-docs-repo
-          git rm -r stable
-          git commit . -m "Delete stable directory"
-
-      - name: Push to cleanlab-docs repo
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT }}
-          repository: ${{ github.repository_owner }}/cleanlab-docs
 
       - name: Deploy
         # if: ${{ (github.ref == 'refs/heads/master') || (github.ref_type == 'tag') }}
