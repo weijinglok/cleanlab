@@ -100,6 +100,12 @@ jobs:
           repo: cleanlab
           excludes: prerelease, draft
 
+      - name: Create latest_release.txt file
+        if: ${{ steps.stable_release.outcome == 'success' }}
+        run: |
+          echo ${{ steps.stable_release.outputs.release }} > latest_release.txt
+          git add -A && git commit -m "Create latest_release.txt"
+
       - name: Find and replace "placeholder_version_number" in verisioning.js
         if: ${{ steps.stable_release.outcome == 'success' }}
         uses: jacobtomlinson/gha-find-replace@v2
