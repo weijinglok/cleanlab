@@ -103,8 +103,7 @@ jobs:
       - name: Create latest_release.txt file
         if: ${{ steps.stable_release.outcome == 'success' }}
         run: |
-          echo ${{ steps.stable_release.outputs.release }} > latest_release.txt
-          mv latest_release.txt /cleanlab-docs
+          echo ${{ steps.stable_release.outputs.release }} > cleanlab-docs/latest_release.txt
           git add -A && git commit -m "Create latest_release.txt"
 
       - name: Find and replace "placeholder_version_number" in verisioning.js
